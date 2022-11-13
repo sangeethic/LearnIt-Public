@@ -1,0 +1,41 @@
+
+
+import ic.sangeeth.learnit.drools.promocode.vo.CartItem;
+import ic.sangeeth.learnit.drools.promocode.vo.PromoCode;
+
+global org.slf4j.Logger logger
+dialect "java"
+rule "Hello World"
+    when
+        eval(1==1) 
+    then
+        logger.info("true");
+end;
+
+rule "Promocode Matching"
+    when
+    exists CartItem()
+    $c: CartItem($cartItemLocation: location, $cartProperty: property, $cartItemId: itemId , $cartProduct: product , $cartRateplan: rateplan, $cartBookingDate: bookingDate , $cartServiceDate: serviceDate )
+    $p: PromoCode(  locations contains $cartItemLocation &&  properties contains $cartProperty && products contains $cartProduct )
+        
+    then
+        logger.info("Rule Matching {}, {}", $p.getDiscount(), $p.getDiscountType());
+        $c.setPrice($c.getPrice()*(100-$p.getDiscount())/100);
+        logger.info("Discounted Price is {}",$c.getPrice());
+end;
+
+/*
+rule "Promocode Matching"
+    when
+    exists Cart()
+    $cartVar: Cart()
+    $cartitemsVar: $cartVar.getCartItems()
+    $cartItemLocation: location, $cartProperty: property, $cartItemId: itemId , $cartProduct: product , $cartRateplan: rateplan, $cartBookingDate: bookingDate , $cartServiceDate: serviceDate )
+    $p: PromoCode(  locations contains $cartItemLocation &&  properties contains $cartProperty && products contains $cartProduct )
+        
+    then
+        logger.info("Rule Matching {}, {}", $p.getDiscount(), $p.getDiscountType());
+        
+end;
+
+*/
