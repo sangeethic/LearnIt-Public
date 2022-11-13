@@ -1,0 +1,17 @@
+curl --location --request POST 'http://localhost:8080/promocodes/apply' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "cartId":"cart1d23ds",
+    "cartItems": [
+        {
+            "itemId": "123",
+            "itemDescription": "Item12",
+            "product": "Red Flower Boque",
+            "location": "BIAL",
+            "property": "Prop1",
+            "price":100.0
+
+        }
+    ],
+    "promoCode": "Nov_Promo_01"
+}'
